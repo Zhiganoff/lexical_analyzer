@@ -159,7 +159,7 @@ int tabl_ident::put(const char *buf) {
 
 class Scanner
 {
-    enum state { H, PREPROC, IDENT, NUMB, COM, ALE, DELIM, NEQ };
+    enum state { H, IDENT, NUMB, COM, ALE, DELIM, NEQ };
     static char * TW[];
     static type_of_lex words[];
     static char * TD[];
@@ -276,10 +276,6 @@ type_of_lex Scanner::words[] = {
         LEX_VAR,
         LEX_WHILE,
         LEX_WRITE,
-        PRE_DEFINE,
-        PRE_UNDEF,
-        PRE_IFNDEF,
-        PRE_ELSE,
         LEX_NULL
 };
 
@@ -316,12 +312,6 @@ Lex Scanner::get_lex ()
             case H:
                 if ( c ==' ' || c =='\n' || c=='\r' || c =='\t' )
                     gc ();
-                else if ( c == '#') {
-                    clear();
-                    add ();
-                    gc ();
-                    CS = PREPROC;
-                }
                 else if ( isalpha(c) )
                 {
                     clear ();
@@ -429,11 +419,6 @@ Lex Scanner::get_lex ()
                 }
                 else
                     throw c;
-                break;
-            case PREPROC:
-                if ( isalpha(c) ) {
-
-                }
                 break;
         } // end switch
     }

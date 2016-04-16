@@ -1,1 +1,5 @@
-#define
+#define abc 5
+#ifdef abc
+    b = 5;
+#else
+    c = 5;
